@@ -1,7 +1,7 @@
 # How to make a  VirtualBox-based Vagrant Amazon 2 Linux Base Box
 Please excuse the sloppyish formatting. I did this quickly from memory. Feel free to submit improvements..
 
-* Download .VDI file from [here](https://cdn.amazonlinux.com/os-images/2017.12.0.20171212.2/virtualbox/)
+* Download .VDI file from [here](https://cdn.amazonlinux.com/os-images/2017.12.0.20180330/virtualbox/)
 
 * Build virtual CD that contains cloud-init data using the files in this directory
 ###### Linux:
@@ -10,8 +10,7 @@ genisoimage -output seed.iso -volid cidata -joliet -rock user-data meta-data
 ```
 ###### Mac:
 ```bash
-brew install cdrtools
-mkisofs -output seed.iso -volid cidata -joliet -rock user-data meta-data
+hdiutil makehybrid -o seed.iso -hfs -joliet -iso -default-volume-name cidata seedconfig/
 ```
 
 * Create a new VM in VirtualBox, call it "AMZN"
@@ -29,7 +28,7 @@ Log in to the virtual machine as root/vagrant
 
 From the VirtualBox menu select Devices->Insert Guest Additions CD Image
 ```bash
-mount -r -t iso 9660 /dev/cdrom/media
+mount -r -t iso9660 /dev/cdrom /media
 cd /media
 ./VBoxLinuxAdditions.run
 systemctl enable vboxadd.service
@@ -44,7 +43,7 @@ export HISTSIZE = 0
 yum clean all
 rm -rf /var/cache/yum
 #Optimize the area of ​​the virtual hard disk
-dd if=/dev/zero of =/ZERO bs=1M
+dd if=/dev/zero of=/ZERO bs=1M
 rm -f /ZERO
 shutdown -h now
 ```
