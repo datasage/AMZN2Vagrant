@@ -23,7 +23,6 @@ packages:
   - make
   - perl
   - bzip2
-  - mod_ssl
 
 
 runcmd:
